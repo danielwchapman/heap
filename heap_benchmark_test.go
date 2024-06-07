@@ -17,25 +17,7 @@ func BenchmarkIntPush(b *testing.B) {
 	}
 }
 
-func BenchmarkIntPop(b *testing.B) {
-	uut := MakeHeap(func(a,b int) bool {return a > b}, 4096)
-	for i := 0; i < b.N; i++ {
-		val := int(rand.Int31n(1000))
-		uut.Push(val)
-	}
-
-	total := 0
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		val, ok := uut.Pop()
-		if ok {
-			total += val // ensure compiler doesn't optimize away the return value
-		}
-	}
-}
-
-// An IntHeap is a min heap of ints, taking from standard library docs.
+// An IntHeap is a min heap of ints, copied from standard library docs.
 type IntHeap []int
 
 func (h IntHeap) Len() int           { return len(h) }
@@ -54,7 +36,7 @@ func (h *IntHeap) Pop() any {
 	return x
 }
 
-func BenchmarkContainerIntHeapPush(b *testing.B) {
+func BenchmarkContainerIntPush(b *testing.B) {
 	uut := make(IntHeap, 0, 4096)
 	stdheap.Init(&uut)
 
@@ -65,7 +47,25 @@ func BenchmarkContainerIntHeapPush(b *testing.B) {
 	}
 }
 
-func BenchmarkContainerIntHeapPop(b *testing.B) {
+func BenchmarkIntPop(b *testing.B) {
+	uut := MakeHeap(func(a,b int) bool {return a > b}, 4096)
+	for i := 0; i < b.N; i++ {
+		val := int(rand.Int31n(1000))
+		uut.Push(val)
+	}
+
+	total := 0
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		val, ok := uut.Pop()
+		if ok {
+			total += val // ensure compiler doesn't optimize away the return value
+		}
+	}
+}
+
+func BenchmarkContainerIntPop(b *testing.B) {
 	uut := make(IntHeap, 0, 4096)
 	stdheap.Init(&uut)
 
@@ -141,6 +141,24 @@ func BenchmarkStructPush(b *testing.B) {
 	}
 }
 
+func BenchmarkContainerStructPush(b *testing.B) {
+	uut := make(PriorityQueue, 0, 4096)
+	stdheap.Init(&uut)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		r := int(rand.Int31n(1000))
+
+		val := Item{
+			priority: r,
+			value: strconv.Itoa(r),
+			index: i,
+		}
+
+		stdheap.Push(&uut, &val)
+	}
+}
+
 func BenchmarkStructPop(b *testing.B) {
 	uut := MakeHeap(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
 
@@ -167,25 +185,7 @@ func BenchmarkStructPop(b *testing.B) {
 	}
 }
 
-func BenchmarkContainerStructHeapPush(b *testing.B) {
-	uut := make(PriorityQueue, 0, 4096)
-	stdheap.Init(&uut)
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		r := int(rand.Int31n(1000))
-
-		val := Item{
-			priority: r,
-			value: strconv.Itoa(r),
-			index: i,
-		}
-
-		stdheap.Push(&uut, &val)
-	}
-}
-
-func BenchmarkContainerStructHeapPop(b *testing.B) {
+func BenchmarkContainerStructPop(b *testing.B) {
 	uut := make(PriorityQueue, 0, 4096)
 	stdheap.Init(&uut)
 

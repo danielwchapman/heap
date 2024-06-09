@@ -8,7 +8,7 @@ import (
 )
 
 func BenchmarkIntPush(b *testing.B) {
-	uut := Make(func(a,b int) bool {return a > b}, 4096)
+	uut := Make(func(a, b int) bool { return a > b }, 4096)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -48,7 +48,7 @@ func BenchmarkContainerIntPush(b *testing.B) {
 }
 
 func BenchmarkIntPop(b *testing.B) {
-	uut := Make(func(a,b int) bool {return a > b}, 4096)
+	uut := Make(func(a, b int) bool { return a > b }, 4096)
 	for i := 0; i < b.N; i++ {
 		val := int(rand.Int31n(1000))
 		uut.Push(val)
@@ -123,9 +123,8 @@ func (pq *PriorityQueue) Pop() any {
 	return item
 }
 
-
 func BenchmarkStructPush(b *testing.B) {
-	uut := Make(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
+	uut := Make(func(a, b *Item) bool { return a.priority > b.priority }, 4096)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -133,8 +132,8 @@ func BenchmarkStructPush(b *testing.B) {
 
 		val := Item{
 			priority: r,
-			value: strconv.Itoa(r),
-			index: i,
+			value:    strconv.Itoa(r),
+			index:    i,
 		}
 
 		uut.Push(&val)
@@ -151,8 +150,8 @@ func BenchmarkContainerStructPush(b *testing.B) {
 
 		val := Item{
 			priority: r,
-			value: strconv.Itoa(r),
-			index: i,
+			value:    strconv.Itoa(r),
+			index:    i,
 		}
 
 		stdheap.Push(&uut, &val)
@@ -160,15 +159,15 @@ func BenchmarkContainerStructPush(b *testing.B) {
 }
 
 func BenchmarkStructPop(b *testing.B) {
-	uut := Make(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
+	uut := Make(func(a, b *Item) bool { return a.priority > b.priority }, 4096)
 
 	for i := 0; i < b.N; i++ {
 		r := int(rand.Int31n(1000))
 
 		val := Item{
 			priority: r,
-			value: strconv.Itoa(r),
-			index: i,
+			value:    strconv.Itoa(r),
+			index:    i,
 		}
 
 		uut.Push(&val)
@@ -194,8 +193,8 @@ func BenchmarkContainerStructPop(b *testing.B) {
 
 		val := Item{
 			priority: r,
-			value: strconv.Itoa(r),
-			index: i,
+			value:    strconv.Itoa(r),
+			index:    i,
 		}
 
 		stdheap.Push(&uut, &val)

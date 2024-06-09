@@ -1,8 +1,10 @@
 # heap
 
-A generic heap implementation. It's advanage over Go's container/heap package is less code is required be written to use it. While this code is not overly complex, it is not out-of-the-box and certainly more error prone. See the IntHeap and Priority Queue samples from [official documentation](https://pkg.go.dev/container/heap#pkg-overview) to get a feel for overhead code required by the standard library implementation.
+A generic heap implementation for Go.
 
-It rivals the performance of `container/heap`. After several trivial benchmark, it constantly runs slower for `Push` operations and consistently faster for `Pop` operatations. If performance is an important requirement, it's worth building out the benchmark tests more.
+It's advanage over Go's container/heap package is less code is required be written to use it. While this code is not overly complex, it is not out-of-the-box and certainly more error prone. See the IntHeap and Priority Queue samples from [official documentation](https://pkg.go.dev/container/heap#pkg-overview) to get a feel for overhead code required by the standard library implementation.
+
+It rivals the performance of `container/heap`. After several trivial benchmarks, it constantly runs slower for `Push` operations and consistently faster for `Pop` operatations. If performance is an important requirement, it's worth building out the benchmark tests more.
 
 Sample Benchmark Output from an M1 MacBook Air:
 ```

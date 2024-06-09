@@ -11,7 +11,7 @@ func TestMaxHeapCorrectness(t *testing.T) {
 	var (
 		size = int(rand.Int31n(1000) + 1000)
 		items = make([]int, size)
-		uut = MakeHeap(func(a,b int) bool {return a < b}, size)
+		uut = Make(func(a,b int) bool {return a < b}, size)
 	)
 	
 	for i := range items {
@@ -45,7 +45,7 @@ func TestMinHeapCorrectness(t *testing.T) {
 	var (
 		size = int(rand.Int31n(1000) + 1000)
 		items = make([]int, size)
-		uut = MakeHeap(func(a,b int) bool {return a > b}, size) // less returns 'greater than' for min heap
+		uut = Make(func(a,b int) bool {return a > b}, size) // less returns 'greater than' for min heap
 	)
 	
 	for i := range items {
@@ -84,7 +84,7 @@ func TestHeapStruct(t *testing.T) {
 	var (
 		size = int(rand.Int31n(1000) + 1000)
 		items = make([]aStruct, size)
-		uut = MakeHeap(func(a,b aStruct) bool {return a.compare < b.compare}, size)
+		uut = Make(func(a,b aStruct) bool {return a.compare < b.compare}, size)
 	)
 	
 	for i := range items {

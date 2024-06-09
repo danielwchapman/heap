@@ -8,7 +8,7 @@ import (
 )
 
 func BenchmarkIntPush(b *testing.B) {
-	uut := MakeHeap(func(a,b int) bool {return a > b}, 4096)
+	uut := Make(func(a,b int) bool {return a > b}, 4096)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -48,7 +48,7 @@ func BenchmarkContainerIntPush(b *testing.B) {
 }
 
 func BenchmarkIntPop(b *testing.B) {
-	uut := MakeHeap(func(a,b int) bool {return a > b}, 4096)
+	uut := Make(func(a,b int) bool {return a > b}, 4096)
 	for i := 0; i < b.N; i++ {
 		val := int(rand.Int31n(1000))
 		uut.Push(val)
@@ -125,7 +125,7 @@ func (pq *PriorityQueue) Pop() any {
 
 
 func BenchmarkStructPush(b *testing.B) {
-	uut := MakeHeap(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
+	uut := Make(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -160,7 +160,7 @@ func BenchmarkContainerStructPush(b *testing.B) {
 }
 
 func BenchmarkStructPop(b *testing.B) {
-	uut := MakeHeap(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
+	uut := Make(func(a,b *Item) bool {return a.priority > b.priority}, 4096)
 
 	for i := 0; i < b.N; i++ {
 		r := int(rand.Int31n(1000))
